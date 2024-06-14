@@ -1,6 +1,6 @@
 const cardSpace = document.getElementById("card-space");
 
-const singleCardGen = (id, name, description, brand, image, price) => {
+const singleCardGen = (id, name, brand, image, price) => {
   const col = document.createElement("div");
   col.className = "col-md-4";
 
@@ -10,6 +10,7 @@ const singleCardGen = (id, name, description, brand, image, price) => {
   const img = document.createElement("img");
   img.src = image;
   img.alt = name;
+  img.className = "card-img-top p-5";
   img.setAttribute("role", "button");
 
   img.onclick = function () {
@@ -26,10 +27,6 @@ const singleCardGen = (id, name, description, brand, image, price) => {
   h5.onclick = function () {
     window.location.replace("/details.html?productId=" + id);
   };
-
-  const des = document.createElement("p");
-  des.className = "card-text";
-  des.innerText = description;
 
   const shop = document.createElement("p");
   shop.className = "card-text h6";
@@ -55,7 +52,7 @@ const singleCardGen = (id, name, description, brand, image, price) => {
 
   btnGroup.append(editBtn);
   flexContainer.append(btnGroup, small);
-  body.append(h5, shop, des, flexContainer);
+  body.append(h5, shop, flexContainer);
   card.append(img, body);
   col.append(card);
   cardSpace.append(col);
@@ -79,8 +76,8 @@ const get = url => {
       const spinner = document.getElementById("spinner");
       spinner.classList.add("d-none");
       products.forEach(product => {
-        const { _id, name, description, brand, imageUrl, price } = product;
-        singleCardGen(_id, name, description, brand, imageUrl, price);
+        const { _id, name, brand, imageUrl, price } = product;
+        singleCardGen(_id, name, brand, imageUrl, price);
       });
     })
     .catch(err => console.log(err));
