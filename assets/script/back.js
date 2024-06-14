@@ -1,35 +1,12 @@
 const form = document.querySelector("form");
 const params = new URLSearchParams(window.location.search);
 const id = params.get("productId");
+const resetBtn = document.getElementById("reset-btn");
+resetBtn.onclick = () => form.reset();
 
 const url = id
   ? "https://striveschool-api.herokuapp.com/api/product/" + id
   : "https://striveschool-api.herokuapp.com/api/product/";
-
-const deleteProduct = () => {
-  const hasConfirmed = confirm(`Sicuro di voler eliminare il prodotto?`);
-  if (hasConfirmed) {
-    fetch(url, {
-      method: "DELETE",
-      headers: {
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjZiZWQyNjdjMjM5YzAwMTUyZjRiMmUiLCJpYXQiOjE3MTgzNDkwOTQsImV4cCI6MTcxOTU1ODY5NH0.N3Flx4mviicHWEEUPctAlNT9G37TkJZPSjg7kbKKxNM",
-      },
-    })
-      .then(resp => {
-        if (resp.ok) {
-          return resp.json();
-        } else {
-          throw new Error("Operazione non riuscita");
-        }
-      })
-      .then(deletedProduct => {
-        alert(`Prodotto ${deletedProduct.name} eliminato con successo`);
-        window.location.assign("/");
-      })
-      .catch(err => console.log(err));
-  }
-};
 
 window.addEventListener("DOMContentLoaded", () => {
   const values = {
@@ -65,9 +42,7 @@ window.addEventListener("DOMContentLoaded", () => {
         values.brand.setAttribute("value", product.brand);
 
         const formBtnSpace = document.getElementById("form-btn");
-
-        const addBtn = document.getElementById("add-btn");
-        addBtn.remove();
+        formBtnSpace.innerHTML = "";
 
         const editBtn = document.createElement("button");
         editBtn.className = "btn btn-primary";
@@ -86,6 +61,31 @@ window.addEventListener("DOMContentLoaded", () => {
       .catch(err => console.log(err));
   }
 });
+
+const deleteProduct = () => {
+  const hasConfirmed = confirm(`Sicuro di voler eliminare il prodotto?`);
+  if (hasConfirmed) {
+    fetch(url, {
+      method: "DELETE",
+      headers: {
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjZiZWQyNjdjMjM5YzAwMTUyZjRiMmUiLCJpYXQiOjE3MTgzNDkwOTQsImV4cCI6MTcxOTU1ODY5NH0.N3Flx4mviicHWEEUPctAlNT9G37TkJZPSjg7kbKKxNM",
+      },
+    })
+      .then(resp => {
+        if (resp.ok) {
+          return resp.json();
+        } else {
+          throw new Error("Operazione non riuscita");
+        }
+      })
+      .then(deletedProduct => {
+        alert(`Prodotto ${deletedProduct.name} eliminato con successo`);
+        window.location.assign("/");
+      })
+      .catch(err => console.log(err));
+  }
+};
 
 form.onsubmit = ev => {
   ev.preventDefault();
