@@ -40,6 +40,8 @@ window.addEventListener("DOMContentLoaded", () => {
       prodPrice.innerText = price + "€";
     })
     .catch(err => {
+      const container = document.getElementById("container");
+      container.innerHTML = "";
       const src = "https://http.cat/" + err;
       const img = document.createElement("img");
       img.style.height = "500px";
