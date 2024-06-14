@@ -76,6 +76,8 @@ const get = url => {
       }
     })
     .then(products => {
+      const spinner = document.getElementById("spinner");
+      spinner.classList.add("d-none");
       products.forEach(product => {
         const { _id, name, description, brand, imageUrl, price } = product;
         singleCardGen(_id, name, description, brand, imageUrl, price);
