@@ -41,21 +41,19 @@ const singleCardGen = (id, name, description, brand, image, price) => {
   const btnGroup = document.createElement("div");
   btnGroup.className = "btn-group";
 
-  const hideBtn = document.createElement("button");
-  hideBtn.className = "btn btn-sm btn-outline-danger";
-  hideBtn.innerText = "Hide";
-  hideBtn.type = "button";
-
   const editBtn = document.createElement("button");
   editBtn.className = "btn btn-sm btn-outline-secondary";
-  editBtn.innerText = "View";
+  editBtn.innerText = "Edit";
   editBtn.type = "button";
+  editBtn.onclick = () => {
+    window.location.replace("/back-office.html?productId=" + id);
+  };
 
   const small = document.createElement("small");
   small.className = "text-muted";
   small.innerText = price + "€";
 
-  btnGroup.append(hideBtn, editBtn);
+  btnGroup.append(editBtn);
   flexContainer.append(btnGroup, small);
   body.append(h5, shop, des, flexContainer);
   card.append(img, body);
