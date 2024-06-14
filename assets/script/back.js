@@ -1,4 +1,5 @@
 const form = document.querySelector("form");
+const alertContainer = document.getElementById("alert-container");
 const params = new URLSearchParams(window.location.search);
 const id = params.get("productId");
 const resetBtn = document.getElementById("reset-btn");
@@ -7,6 +8,15 @@ resetBtn.onclick = () => {
   if (hasConfirmed) {
     form.reset();
   }
+};
+
+const alertGen = (color, message) => {
+  const div = document.createElement("div");
+  div.className = `alert alert-${color} fade-in mt-2`;
+  div.role = "alert";
+  div.innerText = message;
+
+  return div;
 };
 
 const url = id
@@ -124,8 +134,14 @@ form.onsubmit = ev => {
         alert(`Prodotto ${addedProduct.name} modificato con successo!`);
         window.location.assign("/");
       } else {
-        alert(`Prodotto ${addedProduct.name} aggiunto con successo!`);
+        alertContainer.innerHTML = "";
+        alertContainer.appendChild(alertGen("success", `Prodotto ${addedProduct.name} aggiunto con successo`));
         form.reset();
+        setTimeout(() => {
+          const alert = document.querySelector(".alert");
+          alert.classList.remove("fade-in");
+          alert.classList.add("fade-out");
+        }, 3000);
       }
     })
     .catch(err => console.log(err));
