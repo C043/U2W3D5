@@ -1,8 +1,11 @@
+const apiKey =
+  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjZiZWQyNjdjMjM5YzAwMTUyZjRiMmUiLCJpYXQiOjE3MTgzNDkwOTQsImV4cCI6MTcxOTU1ODY5NH0.N3Flx4mviicHWEEUPctAlNT9G37TkJZPSjg7kbKKxNM";
+
 const cardSpace = document.getElementById("card-space");
 
 const singleCardGen = (id, name, brand, image, price) => {
   const col = document.createElement("div");
-  col.className = "col-md-4";
+  col.className = "col-md-6 col-xl-4";
 
   const card = document.createElement("div");
   card.className = "card mb-4 shadow-sm";
@@ -10,7 +13,7 @@ const singleCardGen = (id, name, brand, image, price) => {
   const img = document.createElement("img");
   img.src = image;
   img.alt = name;
-  img.className = "card-img-top p-5";
+  img.className = "card-img-top p-2 p-xl-3";
   img.setAttribute("role", "button");
 
   img.onclick = function () {
@@ -61,15 +64,15 @@ const singleCardGen = (id, name, brand, image, price) => {
 const get = url => {
   fetch(url, {
     headers: {
-      Authorization:
-        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjZiZWQyNjdjMjM5YzAwMTUyZjRiMmUiLCJpYXQiOjE3MTgzNDkwOTQsImV4cCI6MTcxOTU1ODY5NH0.N3Flx4mviicHWEEUPctAlNT9G37TkJZPSjg7kbKKxNM",
+      Authorization: apiKey,
     },
   })
     .then(resp => {
+      console.log(resp);
       if (resp.ok) {
         return resp.json();
       } else {
-        throw new Error("Problema con il reperimento dati");
+        throw resp.status;
       }
     })
     .then(products => {
@@ -80,7 +83,18 @@ const get = url => {
         singleCardGen(_id, name, brand, imageUrl, price);
       });
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      const spinner = document.getElementById("spinner");
+      spinner.classList.add("d-none");
+      const src = "https://http.cat/" + err;
+      const img = document.createElement("img");
+      img.style.height = "500px";
+      img.style.width = "700px";
+      img.src = src;
+
+      cardSpace.classList.add("justify-content-center");
+      cardSpace.appendChild(img);
+    });
 };
 
 const cardGen = () => {

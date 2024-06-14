@@ -1,3 +1,6 @@
+const apiKey =
+  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjZiZWQyNjdjMjM5YzAwMTUyZjRiMmUiLCJpYXQiOjE3MTgzNDkwOTQsImV4cCI6MTcxOTU1ODY5NH0.N3Flx4mviicHWEEUPctAlNT9G37TkJZPSjg7kbKKxNM";
+
 const params = new URLSearchParams(window.location.search);
 const id = params.get("productId");
 
@@ -17,15 +20,14 @@ window.addEventListener("DOMContentLoaded", () => {
 
   fetch(url, {
     headers: {
-      Authorization:
-        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjZiZWQyNjdjMjM5YzAwMTUyZjRiMmUiLCJpYXQiOjE3MTgzNDkwOTQsImV4cCI6MTcxOTU1ODY5NH0.N3Flx4mviicHWEEUPctAlNT9G37TkJZPSjg7kbKKxNM",
+      Authorization: apiKey,
     },
   })
     .then(resp => {
       if (resp.ok) {
         return resp.json();
       } else {
-        throw new Error("Problema con il reperimento dati");
+        throw resp.status;
       }
     })
     .then(product => {
@@ -37,5 +39,16 @@ window.addEventListener("DOMContentLoaded", () => {
       des.innerText = description;
       prodPrice.innerText = price + "€";
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      const main = document.querySelector("main");
+      main.innerHTML = "";
+      main.classList.add("d-flex", "justify-content-center");
+      const src = "https://http.cat/" + err;
+      const img = document.createElement("img");
+      img.style.height = "500px";
+      img.style.width = "700px";
+      img.src = src;
+
+      main.appendChild(img);
+    });
 });

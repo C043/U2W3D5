@@ -126,7 +126,7 @@ form.onsubmit = ev => {
       if (resp.ok) {
         return resp.json();
       } else {
-        throw new Error("Operazione non riuscita");
+        throw resp.status;
       }
     })
     .then(addedProduct => {
@@ -144,5 +144,16 @@ form.onsubmit = ev => {
         }, 3000);
       }
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      const main = document.querySelector("main");
+      main.innerHTML = "";
+      main.classList.add("d-flex", "justify-content-center");
+      const src = "https://http.cat/" + err;
+      const img = document.createElement("img");
+      img.style.height = "500px";
+      img.style.width = "700px";
+      img.src = src;
+
+      main.appendChild(img);
+    });
 };
