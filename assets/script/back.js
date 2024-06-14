@@ -2,7 +2,12 @@ const form = document.querySelector("form");
 const params = new URLSearchParams(window.location.search);
 const id = params.get("productId");
 const resetBtn = document.getElementById("reset-btn");
-resetBtn.onclick = () => form.reset();
+resetBtn.onclick = () => {
+  const hasConfirmed = confirm(`Sicuro di voler resettare il form?`);
+  if (hasConfirmed) {
+    form.reset();
+  }
+};
 
 const url = id
   ? "https://striveschool-api.herokuapp.com/api/product/" + id
