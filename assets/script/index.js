@@ -13,7 +13,7 @@ const singleCardGen = (id, name, description, brand, image, price) => {
   img.setAttribute("role", "button");
 
   img.onclick = function () {
-    window.location.replace("/details.html?photoId=" + id);
+    window.location.replace("/details.html?productId=" + id);
   };
 
   const body = document.createElement("div");
@@ -24,7 +24,7 @@ const singleCardGen = (id, name, description, brand, image, price) => {
   h5.innerText = name;
   h5.setAttribute("role", "button");
   h5.onclick = function () {
-    window.location.replace("/details.html?photoId=" + id);
+    window.location.replace("/details.html?productId=" + id);
   };
 
   const des = document.createElement("p");
@@ -70,7 +70,13 @@ const get = url => {
         "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjZiZWQyNjdjMjM5YzAwMTUyZjRiMmUiLCJpYXQiOjE3MTgzNDkwOTQsImV4cCI6MTcxOTU1ODY5NH0.N3Flx4mviicHWEEUPctAlNT9G37TkJZPSjg7kbKKxNM",
     },
   })
-    .then(resp => resp.json())
+    .then(resp => {
+      if (resp.ok) {
+        return resp.json();
+      } else {
+        throw new Error("Problema con il reperimento dati");
+      }
+    })
     .then(products => {
       products.forEach(product => {
         const { _id, name, description, brand, imageUrl, price } = product;
