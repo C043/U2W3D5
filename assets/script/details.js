@@ -40,15 +40,17 @@ window.addEventListener("DOMContentLoaded", () => {
       prodPrice.innerText = price + "€";
     })
     .catch(err => {
-      const main = document.querySelector("main");
-      main.innerHTML = "";
-      main.classList.add("d-flex", "justify-content-center");
       const src = "https://http.cat/" + err;
       const img = document.createElement("img");
       img.style.height = "500px";
       img.style.width = "700px";
       img.src = src;
 
-      main.appendChild(img);
+      const modalTitle = document.getElementById("errorModalLabel");
+      modalTitle.innerText = err;
+
+      const modalImg = document.getElementById("errorModalImg");
+      modalImg.src = src;
+      document.getElementById("modal-trigger").click();
     });
 });

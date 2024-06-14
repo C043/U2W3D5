@@ -1,3 +1,6 @@
+const apiKey =
+  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjZiZWQyNjdjMjM5YzAwMTUyZjRiMmUiLCJpYXQiOjE3MTgzNDkwOTQsImV4cCI6MTcxOTU1ODY5NH0.N3Flx4mviicHWEEUPctAlNT9G37TkJZPSjg7kbKKxNM";
+
 const form = document.querySelector("form");
 const alertContainer = document.getElementById("alert-container");
 const params = new URLSearchParams(window.location.search);
@@ -38,8 +41,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
     fetch(url, {
       headers: {
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjZiZWQyNjdjMjM5YzAwMTUyZjRiMmUiLCJpYXQiOjE3MTgzNDkwOTQsImV4cCI6MTcxOTU1ODY5NH0.N3Flx4mviicHWEEUPctAlNT9G37TkJZPSjg7kbKKxNM",
+        Authorization: apiKey,
       },
     })
       .then(resp => {
@@ -94,8 +96,7 @@ const deleteProduct = () => {
     fetch(url, {
       method: "DELETE",
       headers: {
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjZiZWQyNjdjMjM5YzAwMTUyZjRiMmUiLCJpYXQiOjE3MTgzNDkwOTQsImV4cCI6MTcxOTU1ODY5NH0.N3Flx4mviicHWEEUPctAlNT9G37TkJZPSjg7kbKKxNM",
+        Authorization: apiKey,
       },
     })
       .then(resp => {
@@ -110,14 +111,21 @@ const deleteProduct = () => {
         window.location.assign("/");
       })
       .catch(err => {
-        const main = document.querySelector("main");
+        /*         const main = document.querySelector("main");
         main.innerHTML = "";
         main.classList.add("d-flex", "justify-content-center");
-        const src = "https://http.cat/" + err;
+ */ const src = "https://http.cat/" + err;
         const img = document.createElement("img");
         img.style.height = "500px";
         img.style.width = "700px";
         img.src = src;
+
+        const modalTitle = document.getElementById("errorModalLabel");
+        modalTitle.innerText = err;
+
+        const modalImg = document.getElementById("errorModalImg");
+        modalImg.src = src;
+        document.getElementById("modal-trigger").click();
 
         main.appendChild(img);
       });
@@ -139,8 +147,7 @@ form.onsubmit = ev => {
     method,
     body: JSON.stringify(values),
     headers: {
-      Authorization:
-        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjZiZWQyNjdjMjM5YzAwMTUyZjRiMmUiLCJpYXQiOjE3MTgzNDkwOTQsImV4cCI6MTcxOTU1ODY5NH0.N3Flx4mviicHWEEUPctAlNT9G37TkJZPSjg7kbKKxNM",
+      Authorization: apiKey,
       "Content-Type": "application/json",
     },
   })
@@ -167,14 +174,21 @@ form.onsubmit = ev => {
       }
     })
     .catch(err => {
-      const main = document.querySelector("main");
+      /*       const main = document.querySelector("main");
       main.innerHTML = "";
       main.classList.add("d-flex", "justify-content-center");
-      const src = "https://http.cat/" + err;
+ */ const src = "https://http.cat/" + err;
       const img = document.createElement("img");
       img.style.height = "500px";
       img.style.width = "700px";
       img.src = src;
+
+      const modalTitle = document.getElementById("errorModalLabel");
+      modalTitle.innerText = err;
+
+      const modalImg = document.getElementById("errorModalImg");
+      modalImg.src = src;
+      document.getElementById("modal-trigger").click();
 
       main.appendChild(img);
     });

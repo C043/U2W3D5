@@ -1,6 +1,8 @@
 const apiKey =
   "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjZiZWQyNjdjMjM5YzAwMTUyZjRiMmUiLCJpYXQiOjE3MTgzNDkwOTQsImV4cCI6MTcxOTU1ODY5NH0.N3Flx4mviicHWEEUPctAlNT9G37TkJZPSjg7kbKKxNM";
 
+const modal = document.getElementById("errorModal");
+console.log(modal);
 const cardSpace = document.getElementById("card-space");
 
 const singleCardGen = (id, name, brand, image, price) => {
@@ -68,7 +70,6 @@ const get = url => {
     },
   })
     .then(resp => {
-      console.log(resp);
       if (resp.ok) {
         return resp.json();
       } else {
@@ -92,8 +93,12 @@ const get = url => {
       img.style.width = "700px";
       img.src = src;
 
-      cardSpace.classList.add("justify-content-center");
-      cardSpace.appendChild(img);
+      const modalTitle = document.getElementById("errorModalLabel");
+      modalTitle.innerText = err;
+
+      const modalImg = document.getElementById("errorModalImg");
+      modalImg.src = src;
+      document.getElementById("modal-trigger").click();
     });
 };
 
