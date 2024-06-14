@@ -39,6 +39,9 @@ window.addEventListener("DOMContentLoaded", () => {
     const h1 = document.querySelector("h1");
     h1.innerText = "Edit Product";
 
+    const navBarItem = document.getElementById("navbar-item-page");
+    navBarItem.innerText = "Edit Product";
+
     fetch(url, {
       headers: {
         Authorization: apiKey,
@@ -111,10 +114,7 @@ const deleteProduct = () => {
         window.location.assign("/");
       })
       .catch(err => {
-        /*         const main = document.querySelector("main");
-        main.innerHTML = "";
-        main.classList.add("d-flex", "justify-content-center");
- */ const src = "https://http.cat/" + err;
+        const src = "https://http.cat/" + err;
         const img = document.createElement("img");
         img.style.height = "500px";
         img.style.width = "700px";
