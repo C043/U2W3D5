@@ -4,9 +4,11 @@ const apiKey =
 const params = new URLSearchParams(window.location.search);
 const id = params.get("productId");
 
+const cardSpace = document.getElementById("card-space");
+
 window.addEventListener("DOMContentLoaded", () => {
   const img = document.getElementById("product-img");
-  const prodName = document.getElementById("product-name");
+  const prodName = document.getElementById("head-title");
   const shop = document.getElementById("shop");
   const des = document.getElementById("description");
   const prodPrice = document.getElementById("price");
@@ -31,7 +33,7 @@ window.addEventListener("DOMContentLoaded", () => {
       }
     })
     .then(product => {
-      const { _id, name, description, brand, imageUrl, price } = product;
+      const { name, description, brand, imageUrl, price } = product;
       img.src = imageUrl;
       img.alt = name;
       prodName.innerText = name;
@@ -40,19 +42,17 @@ window.addEventListener("DOMContentLoaded", () => {
       prodPrice.innerText = price + "€";
     })
     .catch(err => {
-      const container = document.getElementById("container");
-      container.innerHTML = "";
+      const headTitle = document.getElementById("head-title");
+      headTitle.classList.add("d-none");
+
+      cardSpace.innerHTML = "";
+
       const src = "https://http.cat/" + err;
       const img = document.createElement("img");
-      img.style.height = "500px";
-      img.style.width = "700px";
       img.src = src;
+      img.className = "col-12 col-lg-8 col-xl-6";
 
-      const modalTitle = document.getElementById("errorModalLabel");
-      modalTitle.innerText = err;
-
-      const modalImg = document.getElementById("errorModalImg");
-      modalImg.src = src;
-      document.getElementById("modal-trigger").click();
+      cardSpace.classList.add("justify-content-center");
+      cardSpace.appendChild(img);
     });
 });

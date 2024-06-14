@@ -3,6 +3,7 @@ const apiKey =
 
 const form = document.querySelector("form");
 const alertContainer = document.getElementById("alert-container");
+
 const params = new URLSearchParams(window.location.search);
 const id = params.get("productId");
 const resetBtn = document.getElementById("reset-btn");
@@ -13,6 +14,10 @@ resetBtn.onclick = () => {
   }
 };
 
+const url = id
+  ? "https://striveschool-api.herokuapp.com/api/product/" + id
+  : "https://striveschool-api.herokuapp.com/api/product/";
+
 const alertGen = (color, message) => {
   const div = document.createElement("div");
   div.className = `alert alert-${color} fade-in mt-2`;
@@ -21,10 +26,6 @@ const alertGen = (color, message) => {
 
   return div;
 };
-
-const url = id
-  ? "https://striveschool-api.herokuapp.com/api/product/" + id
-  : "https://striveschool-api.herokuapp.com/api/product/";
 
 window.addEventListener("DOMContentLoaded", () => {
   const values = {
@@ -95,6 +96,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
 const deleteProduct = () => {
   const hasConfirmed = confirm(`Sicuro di voler eliminare il prodotto?`);
+
   if (hasConfirmed) {
     fetch(url, {
       method: "DELETE",
@@ -174,15 +176,7 @@ form.onsubmit = ev => {
       }
     })
     .catch(err => {
-      /*       const main = document.querySelector("main");
-      main.innerHTML = "";
-      main.classList.add("d-flex", "justify-content-center");
- */ const src = "https://http.cat/" + err;
-      const img = document.createElement("img");
-      img.style.height = "500px";
-      img.style.width = "700px";
-      img.src = src;
-
+      const src = "https://http.cat/" + err;
       const modalTitle = document.getElementById("errorModalLabel");
       modalTitle.innerText = err;
 
